@@ -1,11 +1,9 @@
 <template>
   <div>
-    <v-app-bar color="blue darken-4" dark>
-      <v-toolbar-title>{{ app_name }}</v-toolbar-title>
+    <v-app-bar color="secondary" dark>
+      <v-toolbar-title class="primary--text">{{ app_name }}</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
-      {{ "gabdez" }}
     </v-app-bar>
   </div>
 </template>

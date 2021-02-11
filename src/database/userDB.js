@@ -9,7 +9,6 @@ export default {
       if (DB) {
         return resolve(DB);
       }
-      console.log("OPENING DB", DB);
       let request = window.indexedDB.open(DB_NAME, DB_VERSION);
 
       request.onerror = e => {
@@ -25,7 +24,10 @@ export default {
       request.onupgradeneeded = e => {
         console.log("onupgradeneeded");
         let db = e.target.result;
-        db.createObjectStore(DB_OBJECT, { autoIncrement: true, keyPath: "id" });
+        db.createObjectStore(DB_OBJECT, {
+          autoIncrement: true,
+          keyPath: "name"
+        });
       };
     });
   },
@@ -43,22 +45,22 @@ export default {
       store.delete(user.id);
     });
   },
-  async getUsers() {
+  async getUser(userName) {
     let db = await this.getDb();
 
     return new Promise(resolve => {
       let trans = db.transaction([DB_OBJECT], "readonly");
       trans.oncomplete = () => {
-        resolve(users);
+        resolve(user);
       };
 
       let store = trans.objectStore(DB_OBJECT);
-      let users = [];
+      let user = null;
 
       store.openCursor().onsuccess = e => {
         let cursor = e.target.result;
-        if (cursor) {
-          users.push(cursor.value);
+        if (cursor && cursor.key === userName) {
+          user = cursor.value;
           cursor.continue();
         }
       };

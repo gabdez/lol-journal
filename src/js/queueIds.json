@@ -1,0 +1,20 @@
+[
+  {
+    "queueId": 420,
+    "map": "Summoner's Rift",
+    "description": "5v5 Ranked Solo games",
+    "notes": null
+  },
+  {
+    "queueId": 430,
+    "map": "Summoner's Rift",
+    "description": "5v5 Blind Pick games",
+    "notes": null
+  },
+  {
+    "queueId": 440,
+    "map": "Summoner's Rift",
+    "description": "5v5 Ranked Flex games",
+    "notes": null
+  }
+]

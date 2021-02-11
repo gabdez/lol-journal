@@ -3,22 +3,22 @@ import idb from "../database/userDB.js";
 export default {
   namespaced: true,
   state: {
-    users: []
+    user: null
   },
   mutations: {},
   actions: {
     async deleteUser(context, user) {
       await idb.deleteUser(user);
     },
-    async getUsers(context) {
-      context.state.users = [];
-      let users = await idb.getUsers();
-      users.forEach(c => {
-        context.state.users.push(c);
-      });
+    async getUser(context, userName) {
+      context.state.user = null;
+      let user = await idb.getUser(userName);
+      context.state.user = user;
+      console.log(user);
     },
     async saveUser(context, user) {
       await idb.saveUser(user);
+      user;
     }
   }
 };

@@ -1,24 +1,20 @@
 <template>
   <div class="home">
-    <div v-if="ready">
-      <v-btn @click="addUser">Add User</v-btn>
-      <p />
-      <ul>
-        <li v-for="user in users" :key="user.id">
-          {{ user.name }} is {{ user.age }} years old.
-          <v-btn @click="deleteUser(user)">Delete</v-btn>
-        </li>
-      </ul>
-    </div>
-    <v-btn @click="getSummoner">get summoner</v-btn>
+    <v-progress-linear
+      background-color="red accent-1"
+      color="green accent-2"
+      value="60"
+    ></v-progress-linear>
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
 import api from "../api/api.js";
+import mixin from "../components/mixins/assets.js";
 export default {
   name: "Home",
+  mixins: [mixin],
   data: function() {
     return {
       ready: true
@@ -26,16 +22,17 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState("user", ["users"])
+    ...mapState("user", ["user"])
   },
-  mounted() {
-    this.getUsers();
+  async mounted() {
+    await this.getUser("gabdez");
+    console.log(this.user);
   },
   methods: {
     ...mapActions({
       saveUser: "user/saveUser",
       deleteUser: "user/deleteUser",
-      getUsers: "user/getUsers"
+      getUser: "user/getUser"
     }),
     addUser() {
       this.saveUser({ name: "gabriel", age: 22 });
@@ -43,6 +40,11 @@ export default {
     async getSummoner() {
       let summoner = await api.getSummoner("gabdez");
       console.log(summoner);
+      console.log(this.$_getSummonerIcon(summoner.profileIconId));
+      let summonerLeagueInfo = await api.getSummonerLeagueInfo(summoner.id);
+      console.log(summonerLeagueInfo);
+      let matchList = await api.getSummonerMatchList(summoner.accountId, 0, 10);
+      console.log(matchList);
     }
   }
 };
