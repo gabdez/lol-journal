@@ -56,6 +56,11 @@ export default {
   components: {},
   mounted() {
     console.log("mounted");
+    let username = localStorage.getItem("userRegistered");
+    if (username) {
+      this.username = username;
+      this.login();
+    }
   },
   methods: {
     ...mapActions({
