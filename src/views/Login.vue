@@ -54,6 +54,9 @@ export default {
     };
   },
   components: {},
+  mounted() {
+    console.log("mounted");
+  },
   methods: {
     ...mapActions({
       saveUser: "user/saveUser"
@@ -72,7 +75,8 @@ export default {
               let user = { ...summoner };
               user.leagueIngo = { ...summonerLeagueInfo[0] };
               await this.saveUser(user);
-              this.$router.push("Home");
+              localStorage.setItem("userRegistered", user.name);
+              this.$router.replace("Home");
             });
         })
         .catch(() => {

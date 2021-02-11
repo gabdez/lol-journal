@@ -5,7 +5,11 @@ export default {
   state: {
     user: null
   },
-  mutations: {},
+  mutations: {
+    setUser(state, payload) {
+      state.user = payload;
+    }
+  },
   actions: {
     async deleteUser(context, user) {
       await idb.deleteUser(user);
