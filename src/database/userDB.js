@@ -61,8 +61,7 @@ export default {
         let cursor = e.target.result;
         if (cursor && cursor.key === userName) {
           user = cursor.value;
-          cursor.continue();
-        }
+        } else cursor.continue();
       };
     });
   },

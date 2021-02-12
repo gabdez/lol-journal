@@ -4,15 +4,11 @@
       <v-toolbar-title class="primary--text">{{ app_name }}</v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="user != null">
-        <span class="pr-2">{{ user.name }}</span>
         <v-menu center bottom offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn icon x-large v-bind="attrs" v-on="on">
               <v-avatar>
-                <v-img
-                  :src="$_getSummonerIcon(user.profileIconId)"
-                  :alt="user.name"
-                />
+                <v-icon>mdi-power</v-icon>
               </v-avatar>
             </v-btn>
           </template>

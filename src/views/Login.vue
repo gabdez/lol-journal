@@ -2,7 +2,10 @@
   <v-container fluid class="fill-height" id="login">
     <v-row justify="center">
       <v-col lg="3" sm="4">
-        <v-card rounded="lg">
+        <v-card
+          rounded="lg"
+          @keypress.enter="!loading && username !== '' && login()"
+        >
           <v-text-field
             v-model="username"
             class="text-field-custo pt-3 ma-3 mb-0"
@@ -64,7 +67,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      saveUser: "user/saveUser"
+      saveUser: "user/saveUser",
+      getUser: "user/getUser"
     }),
     login() {
       this.errorMessage = "";
@@ -78,8 +82,9 @@ export default {
             .then(async summonerLeagueInfo => {
               console.log(summonerLeagueInfo);
               let user = { ...summoner };
-              user.leagueIngo = { ...summonerLeagueInfo[0] };
+              user.leagueInfo = { ...summonerLeagueInfo[0] };
               await this.saveUser(user);
+              await this.getUser(user.name);
               localStorage.setItem("userRegistered", user.name);
               this.$router.replace("Home");
             });

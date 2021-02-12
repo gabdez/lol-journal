@@ -7,7 +7,8 @@ export default {
       summonerSpellIconPath:
         HOST + PATCH + "/img/spell/{summonerSpellName}.png",
       itemIconPath: HOST + PATCH + "/img/item/{itemId}.png",
-      champIconPath: HOST + PATCH + "/img/champion/{champName}.png"
+      champIconPath: HOST + PATCH + "/img/champion/{champName}.png",
+      champSplashAssetPath: HOST + "img/champion/splash/{champName}_0.jpg"
     };
   },
   methods: {
@@ -25,6 +26,9 @@ export default {
     },
     $_getChampIcon(champName) {
       return this.champIconPath.replace("{champName}", champName);
+    },
+    $_getChampSplashAsset(champName) {
+      return this.champSplashAssetPath.replace("{champName}", champName);
     }
   }
 };

@@ -1,32 +1,53 @@
 <template>
-  <div class="home">
-    <v-progress-linear
-      background-color="red accent-1"
-      color="green accent-2"
-      value="60"
-    ></v-progress-linear>
-  </div>
+  <v-container fluid class="fill-height pa-0" id="home">
+    <v-img
+      :src="$_getChampSplashAsset('TwistedFate')"
+      gradient="rgba(22,13,51,0.8), rgba(22,13,51,0.8)"
+      :height="'calc(100vh - 64px)'"
+    >
+      <v-container
+        fluid
+        color="transparent"
+        class="overflow-y-auto fill-height"
+      >
+        <v-col align-self="start">
+          <v-row justify="start">
+            <v-col cols="4">
+              <card-player />
+            </v-col>
+            <v-col cols="8">
+              <key-points />
+            </v-col>
+          </v-row>
+        </v-col>
+      </v-container>
+    </v-img>
+  </v-container>
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
-import api from "../api/api.js";
 import mixin from "../components/mixins/assets.js";
+import cardPlayer from "../components/card-player.vue";
+import keyPoints from "../components/key-points.vue";
 export default {
   name: "Home",
+  components: { cardPlayer, keyPoints },
   mixins: [mixin],
   data: function() {
     return {
       ready: true
     };
   },
-  components: {},
   computed: {
     ...mapState("user", ["user"])
   },
   async mounted() {
-    await this.getUser("gabdez");
-    console.log(this.user);
+    if (this.user == null) {
+      let username = await localStorage.getItem("userRegistered");
+      console.log(username);
+      await this.getUser(username);
+    }
   },
   methods: {
     ...mapActions({
@@ -36,16 +57,34 @@ export default {
     }),
     addUser() {
       this.saveUser({ name: "gabriel", age: 22 });
-    },
-    async getSummoner() {
-      let summoner = await api.getSummoner("gabdez");
-      console.log(summoner);
-      console.log(this.$_getSummonerIcon(summoner.profileIconId));
-      let summonerLeagueInfo = await api.getSummonerLeagueInfo(summoner.id);
-      console.log(summonerLeagueInfo);
-      let matchList = await api.getSummonerMatchList(summoner.accountId, 0, 10);
-      console.log(matchList);
     }
   }
 };
 </script>
+
+<style scoped>
+.filter-bg-img {
+  filter: blur(0.2px) grayscale(0.87) brightness(0.5);
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+</style>
