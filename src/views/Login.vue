@@ -80,9 +80,14 @@ export default {
           api
             .getSummonerLeagueInfo(summoner.id)
             .then(async summonerLeagueInfo => {
-              console.log(summonerLeagueInfo);
               let user = { ...summoner };
               user.leagueInfo = { ...summonerLeagueInfo[0] };
+              const res = await this.getUser(user.name);
+              if (res && res.keyPoints !== {}) {
+                user.keyPoints = res.keyPoints;
+              } else {
+                user.keyPoints = {};
+              }
               await this.saveUser(user);
               await this.getUser(user.name);
               localStorage.setItem("userRegistered", user.name);

@@ -1,5 +1,11 @@
 <template>
-  <v-card rounded="lg" :height="height" elevation="10" color="secondaryBis">
+  <v-card
+    rounded="lg"
+    :height="height"
+    elevation="10"
+    class="lol-card white--text"
+    :max-height="maxHeight"
+  >
     <slot />
   </v-card>
 </template>
@@ -10,9 +16,18 @@ export default {
     height: {
       type: String,
       required: false
+    },
+    maxHeight: {
+      type: String,
+      required: false
     }
   }
 };
 </script>
 
-<style></style>
+<style scoped>
+.lol-card {
+  background-color: rgba(50, 34, 101, 0.8) !important;
+  overflow: auto;
+}
+</style>

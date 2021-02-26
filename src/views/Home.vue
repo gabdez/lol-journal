@@ -19,9 +19,18 @@
               <key-points />
             </v-col>
           </v-row>
+          <v-divider class="mt-4 mx-15 mb-4" style="background-color: grey;" />
+          <v-row>
+            <v-col v-for="n in 20" :key="n" class="d-flex child-flex" cols="4">
+              <v-card>
+                <v-card-title>{{ n }}</v-card-title>
+              </v-card>
+            </v-col>
+          </v-row>
         </v-col>
       </v-container>
     </v-img>
+    <modal-edit-key-point />
   </v-container>
 </template>
 
@@ -30,9 +39,10 @@ import { mapState, mapActions } from "vuex";
 import mixin from "../components/mixins/assets.js";
 import cardPlayer from "../components/card-player.vue";
 import keyPoints from "../components/key-points.vue";
+import modalEditKeyPoint from "../components/modal-edit-keypoint.vue";
 export default {
   name: "Home",
-  components: { cardPlayer, keyPoints },
+  components: { cardPlayer, keyPoints, modalEditKeyPoint },
   mixins: [mixin],
   data: function() {
     return {
@@ -54,10 +64,7 @@ export default {
       saveUser: "user/saveUser",
       deleteUser: "user/deleteUser",
       getUser: "user/getUser"
-    }),
-    addUser() {
-      this.saveUser({ name: "gabriel", age: 22 });
-    }
+    })
   }
 };
 </script>
